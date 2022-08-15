@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap');
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+}
+
+.date {
+    font-size: 1.3rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 50px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 20px;
+    margin-top: 30px;
+}
+
+.visitorForm {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    padding: 0;
+}
+
+    .visitorForm p {
+        font-size: 1.1rem;
+        color: palevioletred;
+        text-align: left;
+        margin-top: 0;
+    }
+
+.visitorList {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    text-align: left;
+    word-spacing: 5px;
+    padding-left: 20px;
+}
+
+h2 {
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.visitor div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    font-weight: 300;
+}
+
+#required {
+    color: red;
+}
+
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+    margin: 3px;
+    text-align: center;
+    height: 50px;
+}
+
+.id {
+    width: 10px;
+}
+
+.name {
+    width: 300px;
+}
+
+.number {
+    width: 300px;
+}
+
+.time {
+    width: 300px;
+}
+
+.css-1rwt2y5-MuiButtonBase-root-MuiButton-root,
+.css-180lf2n-MuiButtonBase-root-MuiButton-root {
+    width: 70px;
+    margin: 30px;
+}
+
+.ListBtns {
+    margin: 0;
+}
+
+.css-ypiqx9-MuiDialogContent-root {
+    width: 250px;
+}
