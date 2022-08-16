@@ -31,7 +31,7 @@
     "gh-pages": "^4.0.0",
     "react-scripts": "latest"
   },
-  "proxy": "https://visitor-log-backend.herokuapp.com/",
+  "proxy": "https://visitor-log-backend.herokuapp.com/graphql",
   "browserslist": {
     "production": [
       ">0.2%",
