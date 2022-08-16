@@ -1,9 +1,9 @@
 ## Visitor log ,React frontend page
 
-###This project is react-frontend page designed with MUI matarial.
-###This communicates to DB with GraphQL(Apollo-Server).
-#API "https://visitor-log-backend.herokuapp.com/graphql"
-#You can use <visitorlog_backend> API in my repository.
+##This project is react-frontend page designed with MUI matarial.
+##This communicates to DB with GraphQL(Apollo-Server).
+##API "https://visitor-log-backend.herokuapp.com/graphql"
+##You can use <visitorlog_backend> API in my repository.
 
 ## You can see the page on below link ▼
 https://woongbeee.github.io/visitorlog_react/
