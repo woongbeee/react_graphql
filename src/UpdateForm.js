@@ -49,7 +49,7 @@ export default function UpdateForm({ state, updateClose, onChange, update }) {
                                 mobile: mobile,
                             },
                         });
-                        console.log(updateVisitor);
+
                         updateClose();
                     }}
                 >
