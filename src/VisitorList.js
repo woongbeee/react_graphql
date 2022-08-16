@@ -6,12 +6,19 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 function Getvisitors({ data, remove, updateHandle }) {
+      /*To show visitot's list on dates, get only date info from DB */
+    
     const result = data.getVisitors.map((person) => {
         return person.createAt.substring(0, 10);
     });
 
-    const newResult = new Set(result);
-    const arr = Array.from(newResult);
+  
+    const newResult = new Set(result); /*Set object lets you store unique values of any type*/
+    const arr = Array.from(newResult); /*To use map method, array-like object newResult turned to Array object.*/
+    
+    /*Or you can just code like below,
+    * newResult.prototype=[]
+    *Above code makes newResult(array-like object)'s prototype Array so it can use all Array's prototype methods*/
 
     return arr.map((obj) => {
         return (
