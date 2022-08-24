@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 
-export default function UpdateForm({ state, updateClose, onChange, update }) {
-    const { firstname, lastname, mobile, updateVisitor, updateOpen } = state;
+export default function UpdateForm({
+    update,
+    updateOpen,
+    updateVisitor,
+    updateClose,
+}) {
+    const [text, setText] = useState({
+        firstname: '',
+        lastname: '',
+        mobile: '',
+        update_open: updateOpen,
+        update_visitor: updateVisitor,
+    });
+
+    const { firstname, lastname, mobile, update_open, update_visitor } = text;
+
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setText({
+            ...text,
+            [name]: value,
+        });
+    };
 
     return (
-        <Dialog open={updateOpen} onClose={updateClose}>
+        <Dialog open={update_open} onClose={updateClose}>
             <DialogContent>
                 <TextField
                     autoFocus
@@ -40,16 +61,15 @@ export default function UpdateForm({ state, updateClose, onChange, update }) {
             <DialogActions>
                 <Button onClick={updateClose}>Cancel</Button>
                 <Button
-                    onClick={() => {
-                        update({
+                    onClick={async () => {
+                        await update({
                             variables: {
-                                id: updateVisitor,
+                                id: update_visitor,
                                 firstname: firstname,
                                 lastname: lastname,
                                 mobile: mobile,
                             },
                         });
-
                         updateClose();
                     }}
                 >

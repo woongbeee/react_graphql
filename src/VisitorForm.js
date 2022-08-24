@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 
-const VisitorForm = ({ state, add, onChange, handleClose }) => {
-    const { firstname, lastname, mobile, open, vertical, horizontal } = state;
+const VisitorForm = ({ add }) => {
+    const [text, setText] = useState({
+        firstname: '',
+        lastname: '',
+        mobile: '',
+        open: false,
+    });
+
+    const { firstname, lastname, mobile, open } = text;
+
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setText({
+            ...text,
+            [name]: value,
+        });
+    };
+
+    const handleClose = () => {
+        setText({
+            ...text,
+            open: false,
+        });
+    };
 
     return (
         <div className="visitorForm">
@@ -45,7 +67,14 @@ const VisitorForm = ({ state, add, onChange, handleClose }) => {
                                 firstname: firstname,
                                 lastname: lastname,
                                 mobile: mobile,
+                                createAt: `${new Date()}`,
                             },
+                        });
+                        setText({
+                            firstname: '',
+                            lastname: '',
+                            mobile: '',
+                            open: true,
                         });
                     }}
                 >
@@ -54,11 +83,11 @@ const VisitorForm = ({ state, add, onChange, handleClose }) => {
             )}
             {open ? (
                 <Snackbar
-                    anchorOrigin={{ vertical, horizontal }}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
                     open={open}
                     onClose={handleClose}
                     message="Submitted!"
-                    key={vertical + horizontal}
+                    key="topLeft"
                 />
             ) : null}
         </div>

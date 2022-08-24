@@ -1,4 +1,4 @@
-import React, { useReducer} from 'react';
+import React, { useState, useCallback } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import VisitorForm from './VisitorForm';
@@ -6,17 +6,6 @@ import VisitorList from './VisitorList';
 import UpdateForm from './UpdateForm';
 
 const today = new Date();
-
-const initialState = {
-    firstname: '',
-    lastname: '',
-    mobile: '',
-    open: false,
-    vertical: 'top',
-    horizontal: 'left',
-    updateVisitor: '',
-    updateOpen: false,
-};
 
 const ADD_VISITOR = gql`
 mutation Mutation($firstname: String!, $lastname: String!, $mobile: String!,$createAt:String!) {
@@ -54,84 +43,43 @@ mutation DeleteVisitor($id: ID) {
 }
 `;
 
-function reducer(state, action) {
-    switch (action.type) {
-        case 'ONCHANGE':
-            return {
-                ...state,
-                [action.name]: action.value,
-            };
-
-        case 'HANDLECLOSE':
-            return { ...state, open: false };
-
-        case 'UPDATEHANDLE':
-            return { ...state, updateOpen: true, updateVisitor: action.id };
-
-        case 'UPDATECLOSE':
-            return { ...state, updateOpen: false };
-
-        case 'ADDCOMPLETE':
-            return { ...state, firstname: '', lastname: '', mobile: '', open: true };
-
-        case 'UPDATECOMPLETE':
-            return {
-                ...state,
-                firstname: '',
-                lastname: '',
-                mobile: '',
-                updateVisitor: '',
-                updateOpen: false,
-            };
-    }
-}
-
 export default function App() {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const { firstname, lastname, mobile, updateOpen } = state;
-
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        dispatch({ type: 'ONCHANGE', name, value });
-    };
-
-    const handleClose = () => {
-        dispatch({ type: 'HANDLECLOSE' });
-    };
-
-    const updateHandle = (e) => {
-        const { id } = e.target;
-        dispatch({ type: 'UPDATEHANDLE', id });
-    };
-
-    const updateClose = (e) => {
-        dispatch({ type: 'UPDATECLOSE' });
-    };
-
-    const [add] = useMutation(ADD_VISITOR, {
-        variables: {
-            firstname: firstname,
-            lastname: lastname,
-            mobile: mobile,
-            createAt: `${new Date()}`,
-        },
-        refetchQueries: [{ query: GET_VISITORS }],
-        onCompleted: () => dispatch({ type: 'ADDCOMPLETE' }),
+    const [state, setState] = useState({
+        updateOpen: false,
+        updateVisitor: '',
     });
 
-    const { loading, data } = useQuery(GET_VISITORS);
+    const { updateOpen, updateVisitor } = state;
+
+    const updateHandle = useCallback((e) => {
+        setState({
+            ...state,
+            updateOpen: true,
+            updateVisitor: e.target.id,
+        });
+    }, []);
+
+    const updateClose = useCallback(() => {
+        setState({
+            ...state,
+            updateOpen: false,
+            updateVisitor: '',
+        });
+    }, []);
+
+    const [add] = useMutation(ADD_VISITOR, {
+        refetchQueries: [{ query: GET_VISITORS }],
+    });
 
     const [update] = useMutation(UPDATE_VISITOR, {
         refetchQueries: [{ query: GET_VISITORS }],
-        onCompleted: () => {
-            dispatch({ type: 'UPDATECOMPLETE' });
-        },
     });
 
     const [remove] = useMutation(DELETE_VISITOR, {
         refetchQueries: [{ query: GET_VISITORS }],
     });
 
+    const { loading, data } = useQuery(GET_VISITORS);
     if (loading) return 'Loading...';
 
     const total = data.getVisitors.filter((person) => {
@@ -148,26 +96,14 @@ export default function App() {
                 {today.toDateString()}, Today {total.length} visited
             </h3>
             <div className="main">
-                <VisitorForm
-                    state={state}
-                    add={add}
-                    onChange={onChange}
-                    handleClose={handleClose}
-                />
-                <VisitorList
-                    state={state}
-                    data={data}
-                    onChange={onChange}
-                    updateHandle={updateHandle}
-                    remove={remove}
-                />
+                <VisitorForm add={add} />
+                <VisitorList data={data} remove={remove} updateHandle={updateHandle} />
                 {updateOpen ? (
                     <UpdateForm
-                        state={state}
-                        updateHandle={updateHandle}
-                        updateClose={updateClose}
-                        onChange={onChange}
                         update={update}
+                        updateOpen={updateOpen}
+                        updateVisitor={updateVisitor}
+                        updateClose={updateClose}
                     />
                 ) : null}
             </div>
