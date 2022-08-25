@@ -61,18 +61,22 @@ export default function UpdateForm({
             <DialogActions>
                 <Button onClick={updateClose}>Cancel</Button>
                 <Button
-                    onClick={async () => {
-                        await update({
-                            variables: {
-                                id: update_visitor,
-                                firstname: firstname,
-                                lastname: lastname,
-                                mobile: mobile,
-                            },
-                        });
-                        updateClose();
-                    }}
-                >
+          onClick={async () => {
+            try {
+              await update({
+                variables: {
+                  id: update_visitor,
+                  firstname: firstname,
+                  lastname: lastname,
+                  mobile: mobile,
+                },
+              });
+            } catch {
+              return 'Error!';
+            }
+            updateClose();
+          }}
+        >
                     Modify
                 </Button>
             </DialogActions>
