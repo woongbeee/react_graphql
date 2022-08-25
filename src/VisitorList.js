@@ -32,16 +32,20 @@ function Getvisitors({ data, remove, updateHandle }) {
                                         VISITED AT: {person.createAt.substring(16, 24)}
                                     </p>
                                     <Button
-                                        variant="outlined"
-                                        color="error"
-                                        onClick={() => {
-                                            remove({
-                                                variables: {
-                                                    id: person._id,
-                                                },
-                                            });
-                                        }}
-                                    >
+                    variant="outlined"
+                    color="error"
+                    onClick={async () => {
+                      try {
+                        await remove({
+                          variables: {
+                            id: person._id,
+                          },
+                        });
+                      } catch {
+                        return 'Error!';
+                      }
+                    }}
+                  >
                                         Remove
                                     </Button>
                                     <Button
