@@ -61,20 +61,20 @@ const VisitorForm = ({ add }) => {
                 <Button
                     variant="outlined"
                     sx={{ margin: '10' }}
-                     onClick={async () => {
-            try {
-              await add({
-                variables: {
-                  firstname: firstname,
-                  lastname: lastname,
-                  mobile: mobile,
-                  createAt: `${new Date()}`,
-                },
-              });
-            } catch {
-              return 'Error!';
-            }
-                        setText({
+                    onClick={async () => {
+                        try {
+                          await add({
+                            variables: {
+                              firstname: firstname,
+                              lastname: lastname,
+                              mobile: mobile,
+                              createAt: `${new Date()}`,
+                            },
+                          });
+                        } catch {
+                          return 'Error!';
+                        }
+                       setText({
                             firstname: '',
                             lastname: '',
                             mobile: '',
